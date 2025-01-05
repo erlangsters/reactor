@@ -10,6 +10,7 @@
 -module(reactor).
 
 -export([spawn/3, spawn/4, spawn/5]).
+-export([enter_loop/3]).
 -export([request/2, request/3]).
 -export([notify/2]).
 -export([reply/2]).
@@ -87,7 +88,7 @@
     {stop, Reason :: term(), NewData :: term()}.
 
 -callback terminate(State :: atom(), Reason :: term(), Data :: term()) ->
-    no_return().
+    Return :: term().
 
 -spec spawn(spawner:mode(), module(), [term()]) -> spawn_return().
 spawn(Mode, Module, Args) ->
@@ -166,6 +167,11 @@ spawn(Mode, Name, Module, Args, Timeout) ->
         {error, Reason} ->
             {error, Reason}
     end.
+
+-spec enter_loop(Module :: module(), State :: atom(), Data :: term()) ->
+    Return :: term().
+enter_loop(Module, State, Data) ->
+    loop(Module, State, State, Data, no_action, []).
 
 -spec request(id(), term()) -> {reply, Response :: term()} | no_reply.
 request(Server, Request) ->
@@ -321,8 +327,7 @@ loop(Module, State, NewState, Data, _Action, _Timers) ->
 try_terminate(Module, State, Reason, Data) ->
     case erlang:function_exported(Module, terminate, 3) of
         true ->
-            Module:terminate(State, Reason, Data),
-            ok;
+            Module:terminate(State, Reason, Data);
         false ->
             ok
     end.

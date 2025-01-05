@@ -111,6 +111,10 @@ reactor_spawn_test() ->
     % XXX: To be implemented.
     ok.
 
+reactor_enter_loop_test() ->
+    % XXX: To be implemented.
+    ok.
+
 reactor_initialize_test() ->
     % XXX: To be implemented.
     ok.
