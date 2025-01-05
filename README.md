@@ -1,7 +1,7 @@
-# OTPless Reactor
+# Reactor Behavior (aka 'gen_statem')
 
 A re-implementation of the `gen_statem` behavior (from the OTP framework) for
-the OTPless distribution of Erlang.
+the OTPless distribution of Erlang, named `reactor`.
 
 :construction: It's a work-in-progress, use at your own risk.
 
@@ -19,7 +19,7 @@ of your project.
 
 ```
 {deps, [
-  {otpless_reactor, {git, "https://github.com/erlangsters/otpless-reactor.git", {tag, "master"}}}
+  {reactor, {git, "https://github.com/erlangsters/reactor.git", {tag, "master"}}}
 ]}.
 ```
 
@@ -27,8 +27,8 @@ If you happen to use the **Erlang.mk** build system, then add the following to
 your Makefile.
 
 ```
-BUILD_DEPS = otpless_reactor
-dep_otpless_reactor = git https://github.com/erlangsters/otpless-reactor master
+BUILD_DEPS = reactor
+dep_reactor = git https://github.com/erlangsters/reactor master
 ```
 
 In practice, you want to replace the branch "master" with a specific "tag" to

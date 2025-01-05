@@ -1,4 +1,4 @@
-PROJECT = otpless_reactor
+PROJECT = reactor
 PROJECT_DESCRIPTION = The gen_statem behavior for OTPless Erlang.
 PROJECT_VERSION = 0.1.0
 
