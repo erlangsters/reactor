@@ -8,6 +8,11 @@
 %% Written by Jonathan De Wachter <jonathan.dewachter@byteplug.io>, November 2024
 %%
 -module(reactor).
+-moduledoc """
+Reactor API and behavior.
+
+To be written.
+""".
 
 -export([spawn/3, spawn/4, spawn/5]).
 -export([enter_loop/3]).
@@ -19,22 +24,24 @@
 
 -compile({no_auto_import, [spawn/4]}).
 
-%%
-%% The reactor behavior.
-%%
-%% To be written.
-%%
-
+-doc "To be written.".
 -type name() :: atom().
+-doc "To be written.".
 -type id() :: name() | pid().
 
+-doc "To be written.".
 -type timer_action() :: {timer, timeout(), Message :: term()}.
+-doc "To be written.".
 -type task_action() :: {task, Message :: term()}.
+-doc "To be written.".
 -type action() :: timer_action() | task_action().
 
+-doc "To be written.".
 -type request_id() :: erlang:timestamp().
+-doc "To be written.".
 -type from() :: {pid(), request_id()}.
 
+-doc "To be written.".
 -type spawn_return() ::
     already_spawned |
     {ok, spawner:spawn_return()} |
@@ -43,12 +50,22 @@
     {error, Reason :: term()}
 .
 
+-doc """
+To be written.
+
+To be written.
+""".
 -callback initialize(Args :: [term()]) ->
     {continue, State :: atom(), Data :: term()} |
     {continue, State :: atom(), Data :: term(), Action :: action()} |
     {abort, Reason :: term()}
 .
 
+-doc """
+To be written.
+
+To be written.
+""".
 -callback handle_request(State :: atom(), Request :: term(), From :: from(), Data :: term()) ->
     {reply, Response :: term(), NewState :: atom(), NewData :: term()} |
     {reply, Response :: term(), NewState :: atom(), NewData :: term(), Action :: action()} |
@@ -58,47 +75,92 @@
     {stop, Reason :: term(), NewData :: term()}
 .
 
+-doc """
+To be written.
+
+To be written.
+""".
 -callback handle_notification(State :: atom(), Notification :: term(), Data :: term()) ->
     {continue, NewState :: atom(), NewData :: term()} |
     {continue, NewState :: atom(), NewData :: term(), Action :: action()} |
     {stop, Reason :: term(), NewData :: term()}
 .
 
+-doc """
+To be written.
+
+To be written.
+""".
 -callback handle_message(State :: atom(), Message :: term(), Data :: term()) ->
     {continue, NewState :: atom(), NewData :: term()} |
     {continue, NewState :: atom(), NewData :: term(), Action :: action()} |
     {stop, Reason :: term(), NewData :: term()}
 .
 
+-doc """
+To be written.
+
+To be written.
+""".
 -callback handle_task(State :: atom(), Payload :: term(), Data :: term()) ->
     {continue, NewState :: atom(), NewData :: term()} |
     {continue, NewState :: atom(), NewData :: term(), Action :: action()} |
     {stop, Reason :: term(), NewData :: term()}
 .
 
+-doc """
+To be written.
+
+To be written.
+""".
 -callback handle_timeout(State :: atom(), Payload :: term(), Data :: term()) ->
     {continue, NewState :: atom(), NewData :: term()} |
     {continue, NewState :: atom(), NewData :: term(), Action :: action()} |
     {stop, Reason :: term(), NewData :: term()}
 .
 
+-doc """
+To be written.
+
+To be written.
+""".
 -callback handle_transition(State :: atom(), NewState :: atom(), Data :: term()) ->
     {continue, NewData :: term()} |
     {continue, NewData :: term(), Action :: action()} |
     {stop, Reason :: term(), NewData :: term()}.
 
+-doc """
+To be written.
+
+To be written.
+""".
 -callback terminate(State :: atom(), Reason :: term(), Data :: term()) ->
     Return :: term().
 
+-doc """
+To be written.
+
+To be written.
+""".
 -spec spawn(spawner:mode(), module(), [term()]) -> spawn_return().
 spawn(Mode, Module, Args) ->
     spawn(Mode, no_name, Module, Args).
 
+-doc """
+To be written.
+
+To be written.
+""".
 -spec spawn(spawner:mode(), no_name | {name, name()}, module(), [term()]) ->
     spawn_return().
 spawn(Mode, Name, Module, Args) ->
     spawn(Mode, Name, Module, Args, infinity).
 
+-doc """
+To be written.
+
+To be written.
+""".
 -spec spawn(
     spawner:mode(),
     no_name | {name, name()},
@@ -168,15 +230,30 @@ spawn(Mode, Name, Module, Args, Timeout) ->
             {error, Reason}
     end.
 
+-doc """
+To be written.
+
+To be written.
+""".
 -spec enter_loop(Module :: module(), State :: atom(), Data :: term()) ->
     Return :: term().
 enter_loop(Module, State, Data) ->
     loop(Module, State, State, Data, no_action, []).
 
+-doc """
+To be written.
+
+To be written.
+""".
 -spec request(id(), term()) -> {reply, Response :: term()} | no_reply.
 request(Server, Request) ->
     request(Server, Request, infinity).
 
+-doc """
+To be written.
+
+To be written.
+""".
 -spec request(id(), term(), timeout()) -> {reply, Reply :: term()} | no_reply.
 request(Server, Request, Timeout) ->
     RequestId = erlang:timestamp(),
@@ -190,16 +267,31 @@ request(Server, Request, Timeout) ->
         no_reply
     end.
 
+-doc """
+To be written.
+
+To be written.
+""".
 -spec notify(id(), term()) -> ok.
 notify(Server, Message) ->
     Server ! {'$reactor_notify', Message},
     ok.
 
+-doc """
+To be written.
+
+To be written.
+""".
 -spec reply(from(), term()) -> ok.
 reply({Pid, RequestId}, Response) ->
     Pid ! {reply, RequestId, Response},
     ok.
 
+-doc """
+To be written.
+
+To be written.
+""".
 -spec get_state(id()) -> atom().
 get_state(Server) ->
     Server ! {'$reactor_state', self()},
@@ -208,6 +300,11 @@ get_state(Server) ->
             State
     end.
 
+-doc """
+To be written.
+
+To be written.
+""".
 -spec get_data(id()) -> term().
 get_data(Server) ->
     Server ! {'$reactor_data', self()},
