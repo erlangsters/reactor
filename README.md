@@ -1,5 +1,12 @@
 # Reactor Behavior (aka 'gen_statem')
 
+[![Erlangsters Repository](https://img.shields.io/badge/erlangsters-reactor-%23a90432)](https://github.com/erlangsters/reactor)
+![Supported Erlang/OTP Versions](https://img.shields.io/badge/erlang%2Fotp-27%7C28-%23a90432)
+![Current Version](https://img.shields.io/badge/version-0.0.1-%23354052)
+![License](https://img.shields.io/github/license/erlangsters/reactor)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/erlangsters/reactor/workflow.yml)](https://github.com/erlangsters/reactor/actions/workflows/workflow.yml)
+[![Documentation Link](https://img.shields.io/badge/documentation-available-yellow)](http://erlangsters.github.io/reactor/)
+
 A re-implementation of the `gen_statem` behavior (from the OTP framework) for
 the OTPless distribution of Erlang, named `reactor`.
 
